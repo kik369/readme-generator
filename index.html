@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>README Generator - Professional GitHub Project READMEs</title>
+    <meta name="description" content="Generate beautiful, professional README files for your GitHub projects in seconds.">
+    <style>
+        :root {
+            --bg: #0d1117;
+            --card: #161b22;
+            --border: #30363d;
+            --text: #e6edf3;
+            --muted: #8b949e;
+            --accent: #58a6ff;
+            --green: #3fb950;
+            --orange: #d29922;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        header {
+            border-bottom: 1px solid var(--border);
+            padding: 20px 0;
+            margin-bottom: 32px;
+        }
+        header h1 { font-size: 28px; color: var(--accent); }
+        header p { color: var(--muted); }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .card h2 { font-size: 16px; margin-bottom: 16px; color: var(--accent); }
+        label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 4px; margin-top: 12px; }
+        label:first-child { margin-top: 0; }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px 12px;
+            background: #0d1117;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text);
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); }
+        textarea { min-height: 80px; font-family: 'Consolas', 'Monaco', monospace; font-size: 13px; resize: vertical; }
+        .badge-row {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+        .badge-btn {
+            padding: 4px 10px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 11px;
+            cursor: pointer;
+            background: transparent;
+            color: var(--muted);
+            transition: all 0.2s;
+        }
+        .badge-btn:hover { border-color: var(--accent); color: var(--accent); }
+        .badge-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .btn-primary { background: var(--accent); color: #fff; }
+        .btn-primary:hover { background: #4a8ce0; }
+        .btn-green { background: var(--green); color: #fff; }
+        .btn-green:hover { filter: brightness(1.1); }
+        .actions { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+        .preview-area {
+            background: #0d1117;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 16px;
+            min-height: 400px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.7;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            color: var(--text);
+        }
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--green);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 14px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s;
+            pointer-events: none;
+        }
+        .toast.show { opacity: 1; transform: translateY(0); }
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+        .footer a { color: var(--accent); text-decoration: none; }
+        .support-section {
+            text-align: center;
+            padding: 20px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 24px;
+        }
+        .support-section p { color: var(--muted); font-size: 14px; margin-bottom: 8px; }
+        .support-section a { color: var(--accent); text-decoration: none; font-weight: 600; }
+        .feature-tag {
+            display: inline-block;
+            background: rgba(88, 166, 255, 0.1);
+            color: var(--accent);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            margin-left: 6px;
+        }
+        .pro-tag {
+            background: rgba(63, 185, 80, 0.1);
+            color: var(--green);
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-left: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📄 README Generator</h1>
+            <p>Create professional GitHub README files in seconds. Free to use.</p>
+        </header>
+
+        <div class="support-section">
+            <p>❤️ If this tool helps you, <a href="https://ko-fi.com/refaktordev" target="_blank">buy me a coffee</a> to keep it free!</p>
+            <p style="font-size:12px;">☕ One coffee = one more feature added</p>
+        </div>
+
+        <div class="grid">
+            <div>
+                <div class="card">
+                    <h2>Project Info</h2>
+                    
+                    <label>Project Name</label>
+                    <input type="text" id="project-name" placeholder="e.g., python-automation-toolkit">
+
+                    <label>Tagline / Short Description</label>
+                    <input type="text" id="tagline" placeholder="e.g., Automate repetitive tasks with Python">
+
+                    <label>Full Description</label>
+                    <textarea id="description" placeholder="Describe what your project does, who it's for, and why it's useful..."></textarea>
+
+                    <label>Installation Command</label>
+                    <input type="text" id="install-cmd" placeholder="e.g., pip install -r requirements.txt">
+
+                    <label>Quick Start Command</label>
+                    <input type="text" id="quickstart-cmd" placeholder="e.g., python main.py --help">
+
+                    <label>License</label>
+                    <select id="license">
+                        <option value="MIT">MIT</option>
+                        <option value="Apache-2.0">Apache 2.0</option>
+                        <option value="GPL-3.0">GPL 3.0</option>
+                        <option value="BSD-3-Clause">BSD 3-Clause</option>
+                        <option value="Unlicense">Unlicense / Public Domain</option>
+                    </select>
+
+                    <label>Badges</label>
+                    <div class="badge-row" id="badges">
+                        <button class="badge-btn" data-badge="python">🐍 Python</button>
+                        <button class="badge-btn" data-badge="mit">📜 MIT</button>
+                        <button class="badge-btn" data-badge="ci">✅ CI/CD</button>
+                        <button class="badge-btn" data-badge="version">🏷️ Version</button>
+                        <button class="badge-btn" data-badge="downloads">📥 Downloads</button>
+                        <button class="badge-btn" data-badge="code style">✨ Code Style</button>
+                    </div>
+
+                    <label>Features (one per line)</label>
+                    <textarea id="features" placeholder="Clean data automatically&#10;Remove duplicates&#10;Standardize columns&#10;Export to CSV"></textarea>
+
+                    <div class="actions">
+                        <button class="btn btn-primary" onclick="generate()">Generate README</button>
+                        <button class="btn" onclick="copyReadme()" style="background:var(--border);color:var(--text);">📋 Copy</button>
+                        <button class="btn btn-green" onclick="downloadReadme()">⬇️ Download .md</button>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="card">
+                    <h2>Preview <span class="pro-tag">Live</span></h2>
+                    <div class="preview-area" id="preview">Fill in the fields and click "Generate README"</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Built with ❤️ by <a href="https://github.com/kik369" target="_blank">kik369</a> | 
+            <a href="https://github.com/kik369/readme-generator" target="_blank">GitHub</a> | 
+            <a href="https://ko-fi.com/refaktordev" target="_blank">Support on Ko-fi</a></p>
+            <p style="margin-top:8px;font-size:11px;">Want a custom version with advanced features? <a href="mailto:kris@refaktor.dev">Contact me</a> for custom development.</p>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">Copied to clipboard!</div>
+
+    <script>
+        let badges = new Set();
+
+        document.querySelectorAll('.badge-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const name = btn.dataset.badge;
+                btn.classList.toggle('active');
+                if (badges.has(name)) badges.delete(name);
+                else badges.add(name);
+                if (document.getElementById('preview').textContent !== 'Fill in the fields and click "Generate README"') {
+                    generate();
+                }
+            });
+        });
+
+        function escapeMd(text) {
+            return text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+
+        function generate() {
+            const name = escapeMd(document.getElementById('project-name').value) || 'My Project';
+            const tagline = escapeMd(document.getElementById('tagline').value) || 'A useful project';
+            const description = escapeMd(document.getElementById('description').value) || 'Describe your project';
+            const installCmd = escapeMd(document.getElementById('install-cmd').value) || '# Installation instructions';
+            const quickstart = escapeMd(document.getElementById('quickstart-cmd').value) || '# Usage instructions';
+            const license = document.getElementById('license').value;
+            const featuresText = document.getElementById('features').value;
+            const features = featuresText.split('\\n').filter(f => f.trim());
+
+            let readme = `# ${name}\\n\\n`;
+            readme += `> ${tagline}\\n\\n`;
+            readme += `${description}\\n\\n`;
+
+            // Badges
+            if (badges.size > 0) {
+                const badgeMap = {
+                    'python': '![Python](https://img.shields.io/badge/python-3.8%2B-blue)',
+                    'mit': '![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)',
+                    'ci': '![CI](https://img.shields.io/badge/CI-passing-brightgreen)',
+                    'version': '![Version](https://img.shields.io/badge/version-1.0.0-blue)',
+                    'downloads': '![Downloads](https://img.shields.io/badge/downloads-1k%2B-brightgreen)',
+                    'code style': '![Code Style](https://img.shields.io/badge/code%20style-black-000000)'
+                };
+                badges.forEach(b => {
+                    if (badgeMap[b]) readme += `${badgeMap[b]} `;
+                });
+                readme += '\\n\\n';
+            }
+
+            // Features
+            if (features.length > 0) {
+                readme += '## Features\\n\\n';
+                features.forEach(f => { readme += `- ✅ ${f}\\n`; });
+                readme += '\\n';
+            }
+
+            // Installation
+            readme += `## Installation\\n\\n`;
+            readme += `\`\`\`bash\\n${installCmd}\\n\`\`\`\\n\\n`;
+
+            // Quick Start
+            readme += `## Quick Start\\n\\n`;
+            readme += `\`\`\`bash\\n${quickstart}\\n\`\`\`\\n\\n`;
+
+            // Usage Examples
+            readme += `## Usage\\n\\n`;
+            readme += `\`\`\`python\\n# Example usage\\nfrom ${name.toLowerCase().replace(/[^a-z0-9]/g, '_')} import *\\n\\n# Add your example here\\nresult = your_function()\\nprint(result)\\n\`\`\`\\n\\n`;
+
+            // License
+            readme += `## License\\n\\n`;
+            readme += `Distributed under the ${license} License. See \`LICENSE\` for more information.\\n`;
+
+            // Donation footer
+            readme += `\\n---\\n`;
+            readme += `\\n*Generated with [README Generator](https://github.com/kik369/readme-generator) • [Buy me a coffee](https://ko-fi.com/refaktordev)*\\n`;
+
+            document.getElementById('preview').textContent = readme;
+            window._currentReadme = readme;
+        }
+
+        function copyReadme() {
+            const text = window._currentReadme || document.getElementById('preview').textContent;
+            if (text === 'Fill in the fields and click "Generate README"') return;
+            navigator.clipboard.writeText(text).then(() => {
+                const toast = document.getElementById('toast');
+                toast.textContent = 'Copied to clipboard!';
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 2000);
+            });
+        }
+
+        function downloadReadme() {
+            const text = window._currentReadme || document.getElementById('preview').textContent;
+            if (text === 'Fill in the fields and click "Generate README"') return;
+            const blob = new Blob([text], { type: 'text/markdown' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'README.md';
+            a.click();
+            URL.revokeObjectURL(url);
+            const toast = document.getElementById('toast');
+            toast.textContent = 'Downloaded!';
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+    </script>
+</body>
+</html>
